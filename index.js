@@ -50,18 +50,10 @@ function hoursWorkedOnDate(dateOfForm) {
 }
 
 function wagesEarnedOnDate(dateOfForm) {
-  const hoursWorked = hoursWorkedOnDate(this, dateOfForm);
+  const hoursWorked = hoursWorkedOnDate.call(this, dateOfForm);
+
   return hoursWorked * this.payPerHour;
 }
-
-/*
- We're giving you this function. Take a look at it, you might see some usage
- that's new and different. That's because we're avoiding a well-known, but
- sneaky bug that we'll cover in the next few lessons!
-
- As a result, the lessons for this function will pass *and* it will be available
- for you to use if you need it!
- */
 
 const allWagesFor = function () {
   const eligibleDates = this.timeInEvents.map(function (e) {
@@ -77,3 +69,16 @@ const allWagesFor = function () {
 
   return payable;
 };
+
+function findEmployeeByFirstName(arrayOfEmployeeRecords, firstName) {
+  return arrayOfEmployeeRecords.find(
+    (record) => record.firstName === firstName
+  );
+}
+
+function calculatePayroll(arrayOfEmployeeRecords) {
+  // Remember to set 0 as the initial value
+  return arrayOfEmployeeRecords.reduce(function (memo, rec) {
+    return memo + allWagesFor.call(rec);
+  }, 0);
+}
